@@ -8,8 +8,10 @@ export default class Alert extends React.Component {
 				<textarea rows="2" cols="50" onChange={this.props.questionInput}>
 				</textarea>
 				<button 
+					className="btn btn-primary"
 				  onClick={this.props.clickQuestion} >
-				  Question
+				  <span className="glyphicon glyphicon-ok"></span>
+				  Send
 				</button>
 			</div>
 		)

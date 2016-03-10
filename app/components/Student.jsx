@@ -59,24 +59,28 @@ export default class Student extends React.Component {
 
     return (
       <div className="row">
-        <AltContainer
-          stores={{slides: SlideStore}}
-        >
-          <SlideShow
-            onFirst={this.handleFirst}
-            onPrev={this.handlePrev}
-            onNext={this.handleNext}
-            onLast={this.handleLast} />
-        </AltContainer>
-        <Quiz quizText={"What is 1+2?"} 
-              quizChoices={["1", "2", "3", "4"]}
-              quizHandleAnswer={this.handleAnswer}
-        />
-        <Alert clickAlert={this.handleAlertButton}/>
-        <Question 
-          questionInput={this.handleQuestionInput}
-          clickQuestion={this.handleQuestion}/>
-        {QuizResult}
+        <div className="col-md-8">
+          <AltContainer
+            stores={{slides: SlideStore}}
+          >
+            <SlideShow
+              onFirst={this.handleFirst}
+              onPrev={this.handlePrev}
+              onNext={this.handleNext}
+              onLast={this.handleLast} />
+          </AltContainer>
+        </div>
+        <div className="col-md-4">
+          <Quiz quizText={"What is 1+2?"} 
+                quizChoices={["1", "2", "3", "4"]}
+                quizHandleAnswer={this.handleAnswer}
+          />
+          <Alert clickAlert={this.handleAlertButton}/>
+          <Question 
+            questionInput={this.handleQuestionInput}
+            clickQuestion={this.handleQuestion}/>
+          {QuizResult}
+        </div>
       </div>
     );
   }
