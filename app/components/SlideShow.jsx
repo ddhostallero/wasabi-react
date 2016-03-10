@@ -22,6 +22,8 @@ export default class SlideShow extends React.Component {
     $(this.slideShowEl).swipe("destroy");
   }
   render() {
+
+    var image_style = {maxWidth: 700}
     // var slideUrl = null; //this.state.slideDeckData[state.slideIdLecturer].url;
     var slideUrl = null;
     try {
@@ -31,7 +33,7 @@ export default class SlideShow extends React.Component {
     console.log('SlideShow', slideUrl);
     return (
       <div className="row">
-        <div className="row" ref="slideImg"><img src={slideUrl} className="slide-show" /></div>
+        <div className="row" ref="slideImg"><img src={slideUrl} className="slide-show" style={image_style}/></div>
         <div className="row">
           <div className="btn-group btn-group-sm" role="group">
             <button type="button" className="btn btn-default" onClick={this.props.onFirst}>

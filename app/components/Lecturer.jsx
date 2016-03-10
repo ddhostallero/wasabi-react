@@ -7,10 +7,26 @@ import SlideActions from '../actions/SlideActions';
 import SlideStore from '../stores/SlideStore';
 import SlideShow from './SlideShow.jsx';
 import LocalVideo from './UserMediaLocal.jsx';
+import Question from './Questions/Question.jsx';
+import QuestionNotif from './Questions/QuestionNotif.jsx';
+import QuestionModal from './Questions/QuestionModal.jsx';
 
 export default class Student extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = { 
+      alerts: 0,
+      questionValue: "",
+      notifs: 2,
+      view: {
+        showModal: false
+      },
+      questions: [{ sender: "dave",
+                    questionMsg: "who?" },
+                  { sender: "bob",
+                    questionMsg: "what?" }]
+    }
 
   }
   componentDidMount() {
@@ -22,6 +38,10 @@ export default class Student extends React.Component {
 
     SlideActions.subSlide({slideDeckId:this.props.params.deckId, user: loggedInUser});
     console.log('componentDidMount', this.state, SlideStore.getState());
+
+    window.setInterval(()=> {
+      SlideActions.emit({cmd:'hi', msg: new Date()});
+    }, 1000);
   }
   componentWillUnmount() {
     SlideActions.unsubSlide(this.props.params.deckId);
@@ -31,8 +51,27 @@ export default class Student extends React.Component {
     this.setState(state);
   }
   render() {
+    var AlertNumber = this.state.alerts
+
     return (
       <div className="row">
+
+        {this.state.view.showModal ? 
+          <QuestionModal questions={this.state.questions} 
+                         handleHideModal={this.handleHideModal}
+                         questionInput={this.handleAnswerInput}
+                         clickQuestion={this.handleAnswer}/> : null}  
+
+        <button className="btn btn-danger">
+          <span className="glyphicon glyphicon-alert" aria-hidden="true"></span>
+          <span className="badge">{AlertNumber}</span>
+        </button>
+
+        <QuestionNotif 
+          handleShowModal={this.handleShowModal}
+          notifs={this.state.notifs}/>
+
+
         <AltContainer
           stores={{slides: SlideStore}}
         >
@@ -46,6 +85,38 @@ export default class Student extends React.Component {
       </div>
     );
   }
+
+  //shows the modal for the questions
+  handleHideModal = (event) => {
+    this.setState({ view: {showModal: false} })
+  }
+
+  //hides the modal for the questions
+  handleShowModal = (event) => {
+    this.setState({ view: {showModal: true} })
+  }
+
+  //triggered when the value of the text area changes
+  handleAnswerInput = (event) => {
+    this.setState({ questionValue: event.target.value });
+  }
+
+  //pushes replies to questions
+  handleAnswer = (index) => {
+    console.log('send to student:' + this.state.questionValue)
+    
+    var questions = this.state.questions;
+    if (!questions[index].reply)
+      questions[index].reply = []
+    
+    var question = { sender: this.state.user.username,
+                     questionMsg: this.state.questionValue }
+
+    questions[index].reply.push(question)
+    SlideActions.emit({ cmd:'ReplyQuestion', msg: questions });
+    this.setState({ questions: questions });
+  }
+
   handleFirst = (event) => {
     if (this.state.slideNoLocal > 0 ) {
       SlideActions.changeSlideLocal({slideNoLocal: 0});

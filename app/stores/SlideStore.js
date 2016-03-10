@@ -27,6 +27,11 @@ class SlideStore {
     this.lecturer = null;
   }
 
+  emit({cmd,msg}) {
+    SlideSource.emit(cmd,msg);
+  }
+
+
   send(cmd,msg) {
     SlideSource.emit(cmd,msg);
   }
