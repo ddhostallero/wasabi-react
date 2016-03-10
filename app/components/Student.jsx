@@ -7,7 +7,8 @@ import SlideActions from '../actions/SlideActions';
 import SlideStore from '../stores/SlideStore';
 import SlideShow from './SlideShow.jsx';
 import Quiz from './Quiz.jsx';
-// import Alert from './Alert.jsx';
+import Alert from './Alert.jsx';
+import Question from './Question.jsx';
 
 export default class Student extends React.Component {
   
@@ -17,7 +18,8 @@ export default class Student extends React.Component {
     this.state = { 
       quizRetries: 0,
       lastAnswer: null, 
-      lastCorrect: false
+      lastCorrect: false,
+      questionInput: ""
     }
   }
   componentDidMount() {
@@ -70,10 +72,25 @@ export default class Student extends React.Component {
               quizChoices={["1", "2", "3", "4"]}
               quizHandleAnswer={this.handleAnswer}
         />
-
+        <Alert clickAlert={this.handleAlertButton}/>
+        <Question 
+          questionInput={this.handleQuestionInput}
+          clickQuestion={this.handleQuestion}/>
         {QuizResult}
       </div>
     );
+  }
+
+  handleQuestionInput = (event) => {
+    this.setState({ questionInput: event.target.value });
+  }
+
+  handleQuestion = (event) => {
+    console.log('send to teacher:' + this.state.questionInput)
+  }
+
+  handleAlertButton = (event) => {
+    console.log('alert teacher');
   }
 
   handleAnswer = (choice, index) => {
@@ -89,7 +106,6 @@ export default class Student extends React.Component {
                     lastCorrect: answerCorrect })
 
   }
-
   handleFirst = (event) => {
     if (this.state.slideNoLocal > 0 ) {
       SlideActions.changeSlideLocal({slideNoLocal: 0});

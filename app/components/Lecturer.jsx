@@ -12,6 +12,10 @@ export default class Student extends React.Component {
   constructor(props) {
     super(props);
 
+    this.state = { 
+      alerts: 0
+    }
+
   }
   componentDidMount() {
     var loggedInUser = UserStore.getState().loggedInUser;
@@ -31,8 +35,12 @@ export default class Student extends React.Component {
     this.setState(state);
   }
   render() {
+    var AlertNumber;
+    AlertNumber = <div> {this.state.alerts} </div>
+
     return (
       <div className="row">
+        <div>Alerts: {AlertNumber}</div>
         <AltContainer
           stores={{slides: SlideStore}}
         >
