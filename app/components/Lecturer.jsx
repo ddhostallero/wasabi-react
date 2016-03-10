@@ -7,13 +7,15 @@ import SlideActions from '../actions/SlideActions';
 import SlideStore from '../stores/SlideStore';
 import SlideShow from './SlideShow.jsx';
 import LocalVideo from './UserMediaLocal.jsx';
+import Question from './Question.jsx';
 
 export default class Student extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = { 
-      alerts: 0
+      alerts: 0,
+      answerInput: ""
     }
 
   }
@@ -39,11 +41,14 @@ export default class Student extends React.Component {
     AlertNumber = <div> {this.state.alerts} </div>
 
     return (
-      <div className="row">
+      <div className="row">a
         <div>Alerts: {AlertNumber}</div>
         <AltContainer
           stores={{slides: SlideStore}}
         >
+        <Question 
+          questionInput={this.handleAnswerInput}
+          clickQuestion={this.handleAnswer}/>
           <SlideShow
             onFirst={this.handleFirst}
             onPrev={this.handlePrev}
@@ -54,6 +59,15 @@ export default class Student extends React.Component {
       </div>
     );
   }
+
+  handleAnswerInput = (event) => {
+    this.setState({ answerInput: event.target.value });
+  }
+
+  handleAnswer = (event) => {
+    console.log('send to student:' + this.state.answerInput)
+  }
+
   handleFirst = (event) => {
     if (this.state.slideNoLocal > 0 ) {
       SlideActions.changeSlideLocal({slideNoLocal: 0});
