@@ -81,6 +81,11 @@ module.exports = (app, mydata, socketIO) => {
         .emit('slideUpdate/'+socket.mydata.slideDeckId,{slideNoLecturer: msg.slideNoLocal, username: socket.mydata.user.username});
       }
     });
+
+    socket.on('hi', function(msg) {
+        socketIO.to(socket.mydata.slideRoom)
+        .emit('hi', msg);
+    })
   });
 
 

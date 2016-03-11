@@ -29,6 +29,11 @@ var
     crypto = require('crypto')
     ;
 
+var MongoClient = require('mongodb').MongoClient;
+var assert = require('assert');
+var ObjectId = require('mongodb').ObjectID;
+var url = 'mongodb://localhost:27017/eba';
+
 var publicDir = 'public';
 var publicDirPath = path.join(__dirname, publicDir);
 
@@ -68,6 +73,13 @@ server.listen(app.get('port'), function(){
 var sio = io.listen(server);
 
 app.mydata = {}; // to store data
+app.mydata = {io: sio, };
+MongoClient.connect(url, function (err, db) {
+	if (err) {
+		console.log('mongodb err');
+	}
+	app.mydata.db = db;
+});
 
 var userHandler = require('./components/user.js');
 var userIO = sio.of('/user');
@@ -85,3 +97,6 @@ var logHandler = require('./components/log.js');
 var logIO = sio.of('/log');
 logHandler(app, app.mydata, logIO);
 
+var rtcSignal = require('./components/rtcsignal.js');
+var rtcIO = sio.of('/rtc');
+rtcSignal(app, app.mydata, rtcIO);

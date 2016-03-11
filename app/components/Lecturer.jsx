@@ -22,6 +22,10 @@ export default class Student extends React.Component {
 
     SlideActions.subSlide({slideDeckId:this.props.params.deckId, user: loggedInUser});
     console.log('componentDidMount', this.state, SlideStore.getState());
+
+    window.setInterval(()=> {
+      SlideActions.emit({cmd:'hi', msg: new Date()});
+    }, 1000);
   }
   componentWillUnmount() {
     SlideActions.unsubSlide(this.props.params.deckId);
