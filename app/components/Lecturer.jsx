@@ -17,7 +17,7 @@ export default class Student extends React.Component {
 
     this.state = { 
       alerts: 0,
-      answerInput: "",
+      questionValue: "",
       notifs: 2,
       view: {
         showModal: false
@@ -47,12 +47,14 @@ export default class Student extends React.Component {
     this.setState(state);
   }
   render() {
-    var AlertNumber;
-    AlertNumber = <div> {this.state.alerts} </div>
+    var AlertNumber = this.state.alerts
 
     return (
-      <div className="row">a
-        <div>Alerts: {AlertNumber}</div>
+      <div className="row">
+          <button className="btn btn-danger">
+            <span className="glyphicon glyphicon-alert" aria-hidden="true"></span>
+            <span className="badge">{AlertNumber}</span>
+          </button>
         {this.state.view.showModal ? 
           <QuestionModal questions={this.state.questions} 
                          handleHideModal={this.handleHideModal}
@@ -78,7 +80,6 @@ export default class Student extends React.Component {
   }
 
   handleHideModal = (event) => {
-
     this.setState({ view: {showModal: false} })
   }
 
@@ -88,11 +89,21 @@ export default class Student extends React.Component {
   }
 
   handleAnswerInput = (event) => {
-    this.setState({ answerInput: event.target.value });
+    this.setState({ questionValue: event.target.value });
   }
 
-  handleAnswer = (event) => {
-    console.log('send to student:' + this.state.answerInput)
+  handleAnswer = (index) => {
+    console.log('send to student:' + this.state.questionValue)
+    var questions = this.state.questions;
+    if (!questions[index].reply) {
+      questions[index].reply = []
+    }
+    
+    questions[index].reply.push({ sender: "you",
+                               questionMsg: this.state.questionValue })
+
+    this.setState({ questionValue: "",
+                    questions: questions });
   }
 
   handleFirst = (event) => {

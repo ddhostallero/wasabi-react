@@ -7,8 +7,9 @@ export default class QuestionNotif extends React.Component {
 	
   constructor(props) {
     super(props);
+    props.handleAnswer
     this.state = { showTextArea: false,
-                    questionIndex: 0 }    
+                   questionIndex: 0 }    
   }
 
 	componentDidMount(){
@@ -44,8 +45,8 @@ export default class QuestionNotif extends React.Component {
             <div className="modal-body">
               { this.state.showTextArea ? 
                 <Question 
-                  questionInput={this.props.handleAnswerInput}
-                  clickQuestion={this.props.handleAnswer}
+                  questionInput={this.props.questionInput}
+                  clickQuestion={this.props.clickQuestion.bind(this, this.state.questionIndex)}
                   questions={[this.props.questions[this.state.questionIndex]]}/> :
                  this.props.questions.map(
                       (c, i) => {
