@@ -7,9 +7,9 @@ import SlideActions from '../actions/SlideActions';
 import SlideStore from '../stores/SlideStore';
 import SlideShow from './SlideShow.jsx';
 import LocalVideo from './UserMediaLocal.jsx';
-import Question from './Question.jsx';
-import QuestionNotif from './QuestionNotif.jsx';
-import QuestionModal from './QuestionModal.jsx';
+import Question from './Questions/Question.jsx';
+import QuestionNotif from './Questions/QuestionNotif.jsx';
+import QuestionModal from './Questions/QuestionModal.jsx';
 
 export default class Student extends React.Component {
   constructor(props) {
@@ -51,15 +51,18 @@ export default class Student extends React.Component {
 
     return (
       <div className="row">
-          <button className="btn btn-danger">
-            <span className="glyphicon glyphicon-alert" aria-hidden="true"></span>
-            <span className="badge">{AlertNumber}</span>
-          </button>
+
         {this.state.view.showModal ? 
           <QuestionModal questions={this.state.questions} 
                          handleHideModal={this.handleHideModal}
                          questionInput={this.handleAnswerInput}
                          clickQuestion={this.handleAnswer}/> : null}  
+
+        <button className="btn btn-danger">
+          <span className="glyphicon glyphicon-alert" aria-hidden="true"></span>
+          <span className="badge">{AlertNumber}</span>
+        </button>
+
         <QuestionNotif 
           handleShowModal={this.handleShowModal}
           notifs={this.state.notifs}/>
@@ -79,31 +82,33 @@ export default class Student extends React.Component {
     );
   }
 
+  //shows the modal for the questions
   handleHideModal = (event) => {
     this.setState({ view: {showModal: false} })
   }
 
+  //hides the modal for the questions
   handleShowModal = (event) => {
-    console.log(this.state)
     this.setState({ view: {showModal: true} })
   }
 
+  //triggered when the value of the text area changes
   handleAnswerInput = (event) => {
     this.setState({ questionValue: event.target.value });
   }
 
+  //pushes replies to questions
   handleAnswer = (index) => {
     console.log('send to student:' + this.state.questionValue)
+    
     var questions = this.state.questions;
-    if (!questions[index].reply) {
+    if (!questions[index].reply)
       questions[index].reply = []
-    }
     
     questions[index].reply.push({ sender: "you",
                                questionMsg: this.state.questionValue })
 
-    this.setState({ questionValue: "",
-                    questions: questions });
+    this.setState({ questions: questions });
   }
 
   handleFirst = (event) => {

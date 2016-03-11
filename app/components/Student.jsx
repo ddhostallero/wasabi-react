@@ -8,7 +8,7 @@ import SlideStore from '../stores/SlideStore';
 import SlideShow from './SlideShow.jsx';
 import Quiz from './Quiz.jsx';
 import Alert from './Alert.jsx';
-import Question from './Question.jsx';
+import Question from './Questions/Question.jsx';
 
 export default class Student extends React.Component {
   
