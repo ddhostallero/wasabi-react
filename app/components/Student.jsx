@@ -89,23 +89,30 @@ export default class Student extends React.Component {
     );
   }
 
+  //triggered when you type something
   handleQuestionInput = (event) => {
     this.setState({ questionValue: event.target.value });
   }
 
+  //triggered when the send button is clicked
   handleQuestion = (event) => {
     console.log('send to teacher:' + this.state.questionValue)
     var questions = this.state.questions;
-    questions.push({ sender: "you",
-                     questionMsg: this.state.questionValue })
+    var question = { sender: "you",
+                     questionMsg: this.state.questionValue }
+    questions.push(question)
 
     this.setState({ questionValue: "",
                     questions: questions });
 
+    SlideActions.emit({cmd:'AskQuestion', msg: question});
   }
 
   //triggered when the alert button is clicked
   handleAlertButton = (event) => {
+    var user = { user: "user" }
+
+    SlideActions.emit({cmd:'AlertTeacher', msg: user});
     console.log('alert teacher');
   }
 
