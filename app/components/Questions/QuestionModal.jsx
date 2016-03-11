@@ -17,9 +17,9 @@ export default class QuestionNotif extends React.Component {
     $(ReactDOM.findDOMNode(this)).on('hidden.bs.modal', this.props.handleHideModal);
   }
 
+  //triggered when a question is clicked
+  //makes the text area appear
   clickQuestion = (c, i) => {
-    console.log(c, i)
-
     this.setState({ showTextArea: true,
                     questionIndex: i })
   }

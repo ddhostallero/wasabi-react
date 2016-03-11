@@ -95,7 +95,6 @@ export default class Student extends React.Component {
 
   handleQuestion = (event) => {
     console.log('send to teacher:' + this.state.questionValue)
-    console.log(this.state)
     var questions = this.state.questions;
     questions.push({ sender: "you",
                      questionMsg: this.state.questionValue })
@@ -105,6 +104,7 @@ export default class Student extends React.Component {
 
   }
 
+  //triggered when the alert button is clicked
   handleAlertButton = (event) => {
     console.log('alert teacher');
   }
