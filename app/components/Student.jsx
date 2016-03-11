@@ -19,7 +19,9 @@ export default class Student extends React.Component {
       quizRetries: 0,
       lastAnswer: null, 
       lastCorrect: false,
-      questionInput: ""
+      questionValue: "",
+      questions: [{ sender: "",
+                    questionMsg: "" }]
     }
   }
   componentDidMount() {
@@ -78,7 +80,9 @@ export default class Student extends React.Component {
           <Alert clickAlert={this.handleAlertButton}/>
           <Question 
             questionInput={this.handleQuestionInput}
-            clickQuestion={this.handleQuestion}/>
+            clickQuestion={this.handleQuestion}
+            questions={this.state.questions}
+            questionValue={this.questionValue}/>
           {QuizResult}
         </div>
       </div>
@@ -86,11 +90,19 @@ export default class Student extends React.Component {
   }
 
   handleQuestionInput = (event) => {
-    this.setState({ questionInput: event.target.value });
+    this.setState({ questionValue: event.target.value });
   }
 
   handleQuestion = (event) => {
-    console.log('send to teacher:' + this.state.questionInput)
+    console.log('send to teacher:' + this.state.questionValue)
+    console.log(this.state)
+    var questions = this.state.questions;
+    questions.push({ sender: "you",
+                     questionMsg: this.state.questionValue })
+
+    this.setState({ questionValue: "",
+                    questions: questions });
+
   }
 
   handleAlertButton = (event) => {

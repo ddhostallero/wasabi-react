@@ -8,6 +8,8 @@ import SlideStore from '../stores/SlideStore';
 import SlideShow from './SlideShow.jsx';
 import LocalVideo from './UserMediaLocal.jsx';
 import Question from './Question.jsx';
+import QuestionNotif from './QuestionNotif.jsx';
+import QuestionModal from './QuestionModal.jsx';
 
 export default class Student extends React.Component {
   constructor(props) {
@@ -15,7 +17,11 @@ export default class Student extends React.Component {
 
     this.state = { 
       alerts: 0,
-      answerInput: ""
+      answerInput: "",
+      notifs: 0,
+      view: {
+        showModal: false
+      }
     }
 
   }
@@ -43,12 +49,17 @@ export default class Student extends React.Component {
     return (
       <div className="row">a
         <div>Alerts: {AlertNumber}</div>
-        <AltContainer
-          stores={{slides: SlideStore}}
-        >
+        {this.state.view.showModal ? <QuestionModal handleHideModal={this.handleHideModal}/> : null}  
+        <QuestionNotif 
+          handleShowModal={this.handleShowModal}
+          notifs={this.state.notifs}/>
         <Question 
           questionInput={this.handleAnswerInput}
           clickQuestion={this.handleAnswer}/>
+
+        <AltContainer
+          stores={{slides: SlideStore}}
+        >
           <SlideShow
             onFirst={this.handleFirst}
             onPrev={this.handlePrev}
@@ -58,6 +69,16 @@ export default class Student extends React.Component {
         <LocalVideo />
       </div>
     );
+  }
+
+  handleHideModal = (event) => {
+
+    this.setState({ view: {showModal: false} })
+  }
+
+  handleShowModal = (event) => {
+    console.log(this.state)
+    this.setState({ view: {showModal: true} })
   }
 
   handleAnswerInput = (event) => {
