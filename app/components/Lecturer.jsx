@@ -109,9 +109,11 @@ export default class Student extends React.Component {
     if (!questions[index].reply)
       questions[index].reply = []
     
-    questions[index].reply.push({ sender: "you",
-                               questionMsg: this.state.questionValue })
+    var question = { sender: this.state.user.username,
+                     questionMsg: this.state.questionValue }
 
+    questions[index].reply.push(question)
+    SlideActions.emit({ cmd:'ReplyQuestion', msg: questions });
     this.setState({ questions: questions });
   }
 

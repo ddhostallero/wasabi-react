@@ -9,35 +9,70 @@ module.exports = (app, mydata, socketIO) => {
       slideId: 12340,
       slideNo: 0,
       title: 'Wasabi 1',
-      url: 'ws1.jpg',
+      url: 'Slide1.JPG',
       urlThumb: 'ws1-thumb.jpg'
       },
       {
       slideId: 12341,
       slideNo: 1,
       title: 'Wasabi 2',
-      url: 'ws2.jpg',
+      url: 'Slide2.JPG',
       urlThumb: 'ws2-thumb.jpg'
       },
       {
       slideId: 12342,
       slideNo: 2,
       title: 'Wasabi 3',
-      url: 'ws3.jpg',
+      url: 'Slide3.JPG',
       urlThumb: 'ws3-thumb.jpg'
       },
       {
       slideId: 12343,
       slideNo: 3,
       title: 'Wasabi 4',
-      url: 'ws4.jpg',
+      url: 'Slide4.JPG',
       urlThumb: 'ws4-thumb.jpg'
       },
       {
       slideId: 12344,
       slideNo: 4,
       title: 'Wasabi 5',
-      url: 'ws5.jpg',
+      url: 'Slide5.JPG',
+      urlThumb: 'ws5-thumb.jpg'
+      },
+      {
+      slideId: 12345,
+      slideNo: 6,
+      title: 'Wasabi 6',
+      url: 'Slide6.JPG',
+      urlThumb: 'ws5-thumb.jpg'
+      },
+      {
+      slideId: 12346,
+      slideNo: 4,
+      title: 'Wasabi 7',
+      url: 'Slide7.JPG',
+      urlThumb: 'ws5-thumb.jpg'
+      },
+      {
+      slideId: 12347,
+      slideNo: 4,
+      title: 'Wasabi 8',
+      url: 'Slide8.JPG',
+      urlThumb: 'ws5-thumb.jpg'
+      },
+      {
+      slideId: 12348,
+      slideNo: 4,
+      title: 'Wasabi 9',
+      url: 'Slide9.JPG',
+      urlThumb: 'ws5-thumb.jpg'
+      },
+      {
+      slideId: 12349,
+      slideNo: 4,
+      title: 'Wasabi 10',
+      url: 'Slide10.JPG',
       urlThumb: 'ws5-thumb.jpg'
       }
     ]

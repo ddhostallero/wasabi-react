@@ -97,8 +97,10 @@ export default class Student extends React.Component {
   //triggered when the send button is clicked
   handleQuestion = (event) => {
     console.log('send to teacher:' + this.state.questionValue)
+    console.log(this.state.user.username)
+
     var questions = this.state.questions;
-    var question = { sender: "you",
+    var question = { sender: this.state.user.username,
                      questionMsg: this.state.questionValue }
     questions.push(question)
 
@@ -110,7 +112,7 @@ export default class Student extends React.Component {
 
   //triggered when the alert button is clicked
   handleAlertButton = (event) => {
-    var user = { user: "user" }
+    var user = { user: this.state.user.username }
 
     SlideActions.emit({cmd:'AlertTeacher', msg: user});
     console.log('alert teacher');
