@@ -1,21 +1,38 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Link } from 'react-router'
+import Question from './Question.jsx';
 
 export default class QuestionNotif extends React.Component {
 	
+  constructor(props) {
+    super(props);
+    this.state = { showTextArea: false,
+                    questionIndex: 0 }    
+  }
+
 	componentDidMount(){
     $(ReactDOM.findDOMNode(this)).modal('show');
     $(ReactDOM.findDOMNode(this)).on('hidden.bs.modal', this.props.handleHideModal);
   }
 
+  clickQuestion = (c, i) => {
+    console.log(c, i)
+
+    this.setState({ showTextArea: true,
+                    questionIndex: i })
+  }
+
 	render() {
 		var icon_style = { backgroundColor: "yellow",
 		              		 borderRadius:100,
-		              		 height: 40,
-		              		 width: 40,
+		              		 height: 30,
+		              		 width: 30,
 		              		 float: "left",
  										   marginRight: 10 }
+
+    var question_style = { padding: 10,
+                           border: "1px #DAD9D4 solid" }
 		return(
       <div className="modal fade">
         <div className="modal-dialog">
@@ -25,17 +42,26 @@ export default class QuestionNotif extends React.Component {
               <h4 className="modal-title">Questions</h4>
             </div>
             <div className="modal-body">
-              <div>
-              	<div style={ icon_style }></div>
-              	<div >
-              		<div style={{fontWeight: "bold"}}>
-              			Lorem Ipsum
-              		</div>
-              		<div>
-              			Lorem Ipsum dolor sit amet
-              		</div>
-              	</div>
-              </div>
+              { this.state.showTextArea ? 
+                <Question 
+                  questionInput={this.props.handleAnswerInput}
+                  clickQuestion={this.props.handleAnswer}
+                  questions={[this.props.questions[this.state.questionIndex]]}/> :
+                 this.props.questions.map(
+                      (c, i) => {
+                        return(
+                          <div style={question_style} key={i} onClick={this.clickQuestion.bind(this, c, i)}>
+                            <div style={ icon_style }></div>
+                            <div style={{fontWeight: "bold"}}>
+                              {c.sender}
+                            </div>
+                            <div>
+                               {c.questionMsg} 
+                            </div>
+                          </div>
+                        )}
+                    )
+              }
             </div>
           </div>
         </div>

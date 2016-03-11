@@ -18,10 +18,14 @@ export default class Student extends React.Component {
     this.state = { 
       alerts: 0,
       answerInput: "",
-      notifs: 0,
+      notifs: 2,
       view: {
         showModal: false
-      }
+      },
+      questions: [{ sender: "dave",
+                    questionMsg: "who?" },
+                  { sender: "bob",
+                    questionMsg: "what?" }]
     }
 
   }
@@ -49,13 +53,15 @@ export default class Student extends React.Component {
     return (
       <div className="row">a
         <div>Alerts: {AlertNumber}</div>
-        {this.state.view.showModal ? <QuestionModal handleHideModal={this.handleHideModal}/> : null}  
+        {this.state.view.showModal ? 
+          <QuestionModal questions={this.state.questions} 
+                         handleHideModal={this.handleHideModal}
+                         questionInput={this.handleAnswerInput}
+                         clickQuestion={this.handleAnswer}/> : null}  
         <QuestionNotif 
           handleShowModal={this.handleShowModal}
           notifs={this.state.notifs}/>
-        <Question 
-          questionInput={this.handleAnswerInput}
-          clickQuestion={this.handleAnswer}/>
+
 
         <AltContainer
           stores={{slides: SlideStore}}

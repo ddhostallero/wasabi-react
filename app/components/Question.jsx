@@ -1,20 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router'
+import QuestionLog from './QuestionLog.jsx';
 
 export default class Alert extends React.Component {
 	render() {
 		return(
 			<div>
-				<div>
-		      { this.props.questions.map(
-		          (c, i) => {
-		            return(
-		              <div>
-		                {c.sender}: {c.questionMsg} 
-		              </div>
-		            )}
-		        )}
-		    </div>
+				<QuestionLog
+					questions={this.props.questions}/>
 				<textarea rows="2" cols="50" onChange={this.props.questionInput}>
 					{this.props.questionValue}
 				</textarea>
